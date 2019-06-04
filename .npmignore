@@ -5,3 +5,5 @@ example
 .eslintrc.yaml
 package-lock.json
 yarn.lock
+coverage
+.nyc_output
