@@ -1,6 +1,6 @@
 {
   "name": "async-limiter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "asynchronous function queue with adjustable concurrency",
   "keywords": [
     "throttle",
@@ -12,8 +12,7 @@
     "concurrency",
     "concurrent"
   ],
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
