@@ -6,7 +6,7 @@ A module for limiting concurrent asynchronous actions in flight. Forked from [qu
 [![tests](https://img.shields.io/travis/STRML/async-limiter.svg?style=flat-square&branch=master)](https://travis-ci.org/STRML/async-limiter)
 [![coverage](https://img.shields.io/coveralls/STRML/async-limiter.svg?style=flat-square&branch=master)](https://coveralls.io/r/STRML/async-limiter)
 
-This module exports a class `Limiter` that implements some of the `Array` API.
+This module exports a class `Queue` that implements some of the `Array` API.
 Pass async functions (ones that accept a callback or return a promise) to an instance's additive array methods.
 
 ## Motivation
@@ -24,9 +24,9 @@ Style should confirm to nodejs/node style.
 ## Example
 
 ```javascript
-var Limiter = require("async-limiter");
+const { Queue } = require("async-limiter");
 
-var t = new Limiter({ concurrency: 2 });
+var t = new Queue({ concurrency: 2 });
 var results = [];
 
 // add jobs using the familiar Array API
@@ -67,7 +67,7 @@ t.onDone(function() {
 
 ```js
 const zlib = require("zlib");
-const Limiter = require("async-limiter");
+const { Queue } = require("async-limiter");
 
 const message = { some: "data" };
 const payload = new Buffer(JSON.stringify(message));
@@ -79,7 +79,7 @@ const payload = new Buffer(JSON.stringify(message));
 // 10:       1375.668ms
 // Infinity: 4423.300ms
 //
-const t = new Limiter({ concurrency: 5 });
+const t = new Queue({ concurrency: 5 });
 function deflate(payload, cb) {
   t.push(function(done) {
     zlib.deflate(payload, function(err, buffer) {
@@ -108,7 +108,7 @@ t.onDone(function() {
 
 ## API
 
-### `var t = new Limiter([opts])`
+### `var t = new Queue([opts])`
 
 Constructor. `opts` may contain inital values for:
 
