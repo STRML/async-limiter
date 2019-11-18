@@ -36,7 +36,7 @@
     "travis": "npm run lint && npm run test",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "example": "node example",
-    "lint": "eslint ."
+    "lint": "eslint --ext .ts,.js ./"
   },
   "repository": {
     "type": "git",
