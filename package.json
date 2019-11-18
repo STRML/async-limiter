@@ -12,6 +12,9 @@
     "concurrency",
     "concurrent"
   ],
+  "engines": {
+    "node": ">=8.10.0"
+  },
   "dependencies": {},
   "devDependencies": {
     "@types/mocha": "^5.2.7",
