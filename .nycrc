@@ -4,7 +4,10 @@
   "statements": 99,
   "functions": 99,
   "branches": 99,
-  "include": [
-     "index.js"
+  "extension": [
+    ".ts"
+  ],
+  "exclude": [
+    "**/*.d.ts"
   ]
 }

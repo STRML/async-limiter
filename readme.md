@@ -6,7 +6,7 @@ A module for limiting concurrent asynchronous actions in flight. Forked from [qu
 [![tests](https://img.shields.io/travis/STRML/async-limiter.svg?style=flat-square&branch=master)](https://travis-ci.org/STRML/async-limiter)
 [![coverage](https://img.shields.io/coveralls/STRML/async-limiter.svg?style=flat-square&branch=master)](https://coveralls.io/r/STRML/async-limiter)
 
-This module exports a class `Limiter` that implements some of the `Array` API.
+This module exports a class `Queue` that implements some of the `Array` API.
 Pass async functions (ones that accept a callback or return a promise) to an instance's additive array methods.
 
 ## Motivation
@@ -23,53 +23,53 @@ Style should confirm to nodejs/node style.
 
 ## Example
 
-``` javascript
-var Limiter = require('async-limiter')
+```javascript
+const { Queue } = require("async-limiter");
 
-var t = new Limiter({concurrency: 2});
-var results = []
+var t = new Queue({ concurrency: 2 });
+var results = [];
 
 // add jobs using the familiar Array API
-t.push(function (cb) {
-  results.push('two')
-  cb()
-})
+t.push(function(cb) {
+  results.push("two");
+  cb();
+});
 
 t.push(
-  function (cb) {
-    results.push('four')
-    cb()
+  function(cb) {
+    results.push("four");
+    cb();
   },
-  function (cb) {
-    results.push('five')
-    cb()
+  function(cb) {
+    results.push("five");
+    cb();
   }
-)
+);
 
-t.unshift(function (cb) {
-  results.push('one')
-  cb()
-})
+t.unshift(function(cb) {
+  results.push("one");
+  cb();
+});
 
-t.splice(2, 0, function (cb) {
-  results.push('three')
-  cb()
-})
+t.splice(2, 0, function(cb) {
+  results.push("three");
+  cb();
+});
 
 // Jobs run automatically. If you want a callback when all are done,
 // call 'onDone()'.
-t.onDone(function () {
-  console.log('all done:', results)
-})
+t.onDone(function() {
+  console.log("all done:", results);
+});
 ```
 
 ## Zlib Example
 
 ```js
-const zlib = require('zlib');
-const Limiter = require('async-limiter');
+const zlib = require("zlib");
+const { Queue } = require("async-limiter");
 
-const message = {some: "data"};
+const message = { some: "data" };
 const payload = new Buffer(JSON.stringify(message));
 
 // Try with different concurrency values to see how this actually
@@ -79,7 +79,7 @@ const payload = new Buffer(JSON.stringify(message));
 // 10:       1375.668ms
 // Infinity: 4423.300ms
 //
-const t = new Limiter({concurrency: 5});
+const t = new Queue({ concurrency: 5 });
 function deflate(payload, cb) {
   t.push(function(done) {
     zlib.deflate(payload, function(err, buffer) {
@@ -89,12 +89,12 @@ function deflate(payload, cb) {
   });
 }
 
-console.time('deflate');
-for(let i = 0; i < 30000; ++i) {
-  deflate(payload, function (err, buffer) {});
+console.time("deflate");
+for (let i = 0; i < 30000; ++i) {
+  deflate(payload, function(err, buffer) {});
 }
 t.onDone(function() {
-  console.timeEnd('deflate');
+  console.timeEnd("deflate");
 });
 ```
 
@@ -108,25 +108,34 @@ t.onDone(function() {
 
 ## API
 
-### `var t = new Limiter([opts])`
+### `var t = new Queue([opts])`
+
 Constructor. `opts` may contain inital values for:
-* `t.concurrency`
+
+- `t.concurrency`
 
 ## Instance methods
 
 ### `t.onDone(fn)`
+
 `fn` will be called once and only once, when the queue is empty.
 
 ## Instance methods mixed in from `Array`
+
 Mozilla has docs on how these methods work [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
+
 ### `t.push(element1, ..., elementN)`
+
 ### `t.unshift(element1, ..., elementN)`
+
 ### `t.splice(index , howMany[, element1[, ...[, elementN]]])`
 
 ## Properties
+
 ### `t.concurrency`
+
 Max number of jobs the queue should process concurrently, defaults to `Infinity`.
 
 ### `t.length`
-Jobs pending + jobs to process (readonly).
 
+Jobs pending + jobs to process (readonly).

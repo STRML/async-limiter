@@ -12,24 +12,49 @@
     "concurrency",
     "concurrent"
   ],
+  "engines": {
+    "node": ">=8.10.0"
+  },
   "dependencies": {},
   "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.8",
+    "@typescript-eslint/parser": "^2.7.0",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
     "coveralls": "^3.0.3",
-    "eslint": "^5.16.0",
-    "eslint-plugin-mocha": "^5.3.0",
+    "eslint": "^6.6.0",
+    "eslint-plugin-mocha": "^6.2.1",
     "intelli-espower-loader": "^1.0.1",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.2",
     "nyc": "^14.1.1",
-    "power-assert": "^1.6.1"
+    "power-assert": "^1.6.1",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.5.2",
+    "typescript": "^3.7.2"
   },
   "scripts": {
+    "build": "tsc",
+    "prettier": "prettier -c **/*.{js,md,ts,json}",
     "test": "mocha --require intelli-espower-loader test/",
-    "travis": "npm run lint && npm run test",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "test-tsc": "mocha -r ts-node/register --require intelli-espower-loader --extension ts --ignore **/*spec.d.ts",
+    "travis": "npm run prettier && npm run lint && npm run test-tsc",
+    "coverage": "nyc npm run test-tsc && nyc report --reporter=text-lcov | coveralls",
     "example": "node example",
-    "lint": "eslint ."
+    "lint": "eslint --ext .ts,.js ./"
   },
-  "repository": "https://github.com/strml/async-limiter.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strml/async-limiter.git"
+  },
   "author": "Samuel Reed <samuel.trace.reed@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/strml/async-limiter/issues"
+  },
+  "homepage": "https://github.com/strml/async-limiter#readme",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  }
 }
