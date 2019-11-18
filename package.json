@@ -33,6 +33,7 @@
     "build": "tsc",
     "prettier": "prettier -c **/*.{js,md,ts,json}",
     "test": "mocha --require intelli-espower-loader test/",
+    "test-tsc": "mocha -r ts-node/register --require intelli-espower-loader --extension ts --ignore **/*spec.d.ts",
     "travis": "npm run lint && npm run test",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "example": "node example",
