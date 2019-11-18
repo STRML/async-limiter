@@ -15,6 +15,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.8",
     "coveralls": "^3.0.3",
     "eslint": "^6.6.0",
     "eslint-plugin-mocha": "^6.2.1",
