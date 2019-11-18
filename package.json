@@ -30,6 +30,7 @@
     "typescript": "^3.7.2"
   },
   "scripts": {
+    "build": "tsc",
     "prettier": "prettier -c **/*.{js,md,ts,json}",
     "test": "mocha --require intelli-espower-loader test/",
     "travis": "npm run lint && npm run test",
