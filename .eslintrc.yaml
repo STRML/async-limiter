@@ -42,7 +42,7 @@ rules:
   eqeqeq: [error, smart]
   no-fallthrough: error
   no-global-assign: error
-  no-multi-spaces: [error, {ignoreEOLComments: true}]
+  no-multi-spaces: [error, { ignoreEOLComments: true }]
   no-octal: error
   no-proto: error
   no-redeclare: error
@@ -75,10 +75,9 @@ rules:
   # http://eslint.org/docs/rules/#variables
   no-delete-var: error
   no-undef: error
-  no-unused-vars: [error, {args: none}]
-  no-use-before-define: [error, {classes: true,
-                                 functions: false,
-                                 variables: false}]
+  no-unused-vars: [error, { args: none }]
+  no-use-before-define:
+    [error, { classes: true, functions: false, variables: false }]
 
   # Node.js and CommonJS
   # http://eslint.org/docs/rules/#nodejs-and-commonjs
@@ -90,7 +89,7 @@ rules:
   # Stylistic Issues
   # http://eslint.org/docs/rules/#stylistic-issues
   block-spacing: error
-  brace-style: [error, 1tbs, {allowSingleLine: true}]
+  brace-style: [error, 1tbs, { allowSingleLine: true }]
   comma-dangle: [error, only-multiline]
   comma-spacing: error
   comma-style: error
@@ -98,40 +97,56 @@ rules:
   eol-last: error
   func-call-spacing: error
   func-name-matching: error
-  func-style: [error, declaration, {allowArrowFunctions: true}]
-  indent: [error, 2, {ArrayExpression: first,
-                      CallExpression: {arguments: first},
-                      FunctionDeclaration: {parameters: first},
-                      FunctionExpression: {parameters: first},
-                      MemberExpression: off,
-                      ObjectExpression: first,
-                      SwitchCase: 1}]
-  key-spacing: [error, {mode: minimum}]
+  func-style: [error, declaration, { allowArrowFunctions: true }]
+  indent:
+    [
+      error,
+      2,
+      {
+        ArrayExpression: first,
+        CallExpression: { arguments: first },
+        FunctionDeclaration: { parameters: first },
+        FunctionExpression: { parameters: first },
+        MemberExpression: off,
+        ObjectExpression: first,
+        SwitchCase: 1,
+      },
+    ]
+  key-spacing: [error, { mode: minimum }]
   keyword-spacing: error
   linebreak-style: [error, unix]
-  max-len: [error, {code: 80,
-                ignoreRegExpLiterals: true,
-                ignoreUrls: true,
-                tabWidth: 2}]
+  max-len:
+    [
+      error,
+      { code: 80, ignoreRegExpLiterals: true, ignoreUrls: true, tabWidth: 2 },
+    ]
   new-parens: error
   no-mixed-spaces-and-tabs: error
-  no-multiple-empty-lines: [error, {max: 2, maxEOF: 0, maxBOF: 0}]
-  no-restricted-syntax: [error, {
-    selector: "CallExpression[callee.object.name='assert'][callee.property.name='throws'][arguments.1.type='Literal']:not([arguments.1.regex])",
-    message: "use a regular expression for second argument of assert.throws()"
-  }, {
-    selector: "CallExpression[callee.object.name='assert'][callee.property.name='throws'][arguments.length<2]",
-    message: "assert.throws() must be invoked with at least two arguments."
-  }, {
-    selector: "CallExpression[callee.name='setTimeout'][arguments.length<2]",
-    message: "setTimeout() must be invoked with at least two arguments."
-  }, {
-    selector: "CallExpression[callee.name='setInterval'][arguments.length<2]",
-    message: "setInterval() must be invoked with at least 2 arguments."
-  }, {
-    selector: "ThrowStatement > CallExpression[callee.name=/Error$/]",
-    message: "Use new keyword when throwing an Error."
-  }]
+  no-multiple-empty-lines: [error, { max: 2, maxEOF: 0, maxBOF: 0 }]
+  no-restricted-syntax:
+    [
+      error,
+      {
+        selector: "CallExpression[callee.object.name='assert'][callee.property.name='throws'][arguments.1.type='Literal']:not([arguments.1.regex])",
+        message: "use a regular expression for second argument of assert.throws()",
+      },
+      {
+        selector: "CallExpression[callee.object.name='assert'][callee.property.name='throws'][arguments.length<2]",
+        message: "assert.throws() must be invoked with at least two arguments.",
+      },
+      {
+        selector: "CallExpression[callee.name='setTimeout'][arguments.length<2]",
+        message: "setTimeout() must be invoked with at least two arguments.",
+      },
+      {
+        selector: "CallExpression[callee.name='setInterval'][arguments.length<2]",
+        message: "setInterval() must be invoked with at least 2 arguments.",
+      },
+      {
+        selector: "ThrowStatement > CallExpression[callee.name=/Error$/]",
+        message: "Use new keyword when throwing an Error.",
+      },
+    ]
   no-tabs: error
   no-trailing-spaces: error
   object-curly-spacing: [error, always]
@@ -141,11 +156,8 @@ rules:
   semi: error
   semi-spacing: error
   space-before-blocks: [error, always]
-  space-before-function-paren: [error, {
-    anonymous: never,
-    named: never,
-    asyncArrow: always
-  }]
+  space-before-function-paren:
+    [error, { anonymous: never, named: never, asyncArrow: always }]
   space-in-parens: [error, never]
   space-infix-ops: error
   space-unary-ops: error
@@ -154,7 +166,7 @@ rules:
   # ECMAScript 6
   # http://eslint.org/docs/rules/#ecmascript-6
   arrow-parens: [error, always]
-  arrow-spacing: [error, {before: true, after: true}]
+  arrow-spacing: [error, { before: true, after: true }]
   constructor-super: error
   no-class-assign: error
   no-confusing-arrow: error
@@ -162,7 +174,7 @@ rules:
   no-dupe-class-members: error
   no-new-symbol: error
   no-this-before-super: error
-  prefer-const: [error, {ignoreReadBeforeAssign: true}]
+  prefer-const: [error, { ignoreReadBeforeAssign: true }]
   rest-spread-spacing: error
   template-curly-spacing: error
 

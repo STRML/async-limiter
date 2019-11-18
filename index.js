@@ -13,11 +13,7 @@ function Queue(options) {
   this._done = done.bind(this);
 }
 
-var arrayAddMethods = [
-  'push',
-  'unshift',
-  'splice'
-];
+var arrayAddMethods = ['push', 'unshift', 'splice'];
 
 arrayAddMethods.forEach(function(method) {
   Queue.prototype[method] = function() {

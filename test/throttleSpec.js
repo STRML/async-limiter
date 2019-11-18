@@ -3,7 +3,7 @@ const assert = require('assert');
 
 describe('Async-Limiter', function(endTest) {
   it('runs through three items linearly', function(endTest) {
-    var expected = [ 'one', 'two', 'three' ];
+    var expected = ['one', 'two', 'three'];
     var actual = [];
     var t = new Limiter();
     var numEndHandlers = 0;
@@ -66,7 +66,7 @@ describe('Async-Limiter', function(endTest) {
     });
 
     t.onDone(function() {
-      var expected = [ 'one', 'two', 'three' ];
+      var expected = ['one', 'two', 'three'];
       assert(actual.length === expected.length);
 
       for (var i in actual) {
