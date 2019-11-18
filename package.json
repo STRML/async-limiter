@@ -36,7 +36,19 @@
     "example": "node example",
     "lint": "eslint ."
   },
-  "repository": "https://github.com/strml/async-limiter.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strml/async-limiter.git"
+  },
   "author": "Samuel Reed <samuel.trace.reed@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/strml/async-limiter/issues"
+  },
+  "homepage": "https://github.com/strml/async-limiter#readme",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  }
 }
