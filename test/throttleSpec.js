@@ -2,10 +2,10 @@ var Limiter = require('../');
 const assert = require('assert');
 
 describe('Async-Limiter', function(endTest) {
-  it('runs through three items linearly', function(endTest) {
+  it('Runs through three items linearly', function(endTest) {
     var expected = [ 'one', 'two', 'three' ];
     var actual = [];
-    var t = new Limiter();
+    var t = new Limiter({ concurrency: 1 });
     var numEndHandlers = 0;
 
     function done() {
@@ -21,23 +21,59 @@ describe('Async-Limiter', function(endTest) {
 
     t.push(function(cb) {
       actual.push('one');
-      cb();
+      setTimeout(cb, 2);
       done();
     });
 
     t.push(function(cb) {
       actual.push('two');
-      cb();
+      setTimeout(cb, 0);
       done();
     });
 
     setTimeout(function() {
       t.push(function(cb) {
         actual.push('three');
-        cb();
+        setTimeout(cb, 2);
         done();
       });
     }, 10);
+  });
+
+  it('Doesn\'t start items synchronously', function(endTest) {
+    var t = new Limiter({ concurrency: 1 });
+    var results = [];
+    // add jobs using the familiar Array API
+    t.push(function(cb) {
+      results.push('two');
+      process.nextTick(cb);
+    });
+
+    t.push(
+      function(cb) {
+        results.push('four');
+        process.nextTick(cb);
+      },
+      function(cb) {
+        results.push('five');
+        process.nextTick(cb);
+      }
+    );
+
+    t.unshift(function(cb) {
+      results.push('one');
+      process.nextTick(cb);
+    });
+
+    t.splice(2, 0, function(cb) {
+      results.push('three');
+      process.nextTick(cb);
+    });
+
+    t.onDone(function() {
+      assert.deepStrictEqual(results, ['one', 'two', 'three', 'four', 'five']);
+      endTest();
+    });
   });
 
   it('Runs through three items concurrently', function(endTest) {
@@ -83,6 +119,7 @@ describe('Async-Limiter', function(endTest) {
 
     t.push(function(cb) {
       setTimeout(function() {
+        assert(t.pending === 3);
         assert(t.length === 3);
         cb();
         assert(t.length === 2);
@@ -111,7 +148,7 @@ describe('Async-Limiter', function(endTest) {
       endTest();
     });
 
-    assert(t.pending === 3);
+    assert(t.pending === 0);
     assert(t.length === 3);
   });
 
@@ -120,6 +157,7 @@ describe('Async-Limiter', function(endTest) {
 
     t.push(function(cb) {
       setTimeout(function() {
+        assert(t.pending === 1);
         assert(t.length === 3);
         cb();
         assert(t.length === 2);
@@ -148,7 +186,7 @@ describe('Async-Limiter', function(endTest) {
       endTest();
     });
 
-    assert(t.pending === 1);
+    assert(t.pending === 0);
     assert(t.length === 3);
   });
 

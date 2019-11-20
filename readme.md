@@ -24,43 +24,43 @@ Style should confirm to nodejs/node style.
 ## Example
 
 ``` javascript
-var Limiter = require('async-limiter')
+var Limiter = require('async-limiter');
 
-var t = new Limiter({concurrency: 2});
-var results = []
+var t = new Limiter({ concurrency: 2 });
+var results = [];
 
 // add jobs using the familiar Array API
-t.push(function (cb) {
-  results.push('two')
-  cb()
-})
+t.push(function(cb) {
+  results.push('two');
+  cb();
+});
 
 t.push(
-  function (cb) {
-    results.push('four')
-    cb()
+  function(cb) {
+    results.push('four');
+    cb();
   },
-  function (cb) {
-    results.push('five')
-    cb()
+  function(cb) {
+    results.push('five');
+    cb();
   }
-)
+);
 
-t.unshift(function (cb) {
-  results.push('one')
-  cb()
-})
+t.unshift(function(cb) {
+  results.push('one');
+  cb();
+});
 
-t.splice(2, 0, function (cb) {
-  results.push('three')
-  cb()
-})
+t.splice(2, 0, function(cb) {
+  results.push('three');
+  cb();
+});
 
-// Jobs run automatically. If you want a callback when all are done,
-// call 'onDone()'.
-t.onDone(function () {
-  console.log('all done:', results)
-})
+// Jobs run automatically on the next tick.
+// If you want a callback when all are done, call 'onDone()'.
+t.onDone(function() {
+  console.log('all done:', results);
+});
 ```
 
 ## Zlib Example
@@ -69,7 +69,7 @@ t.onDone(function () {
 const zlib = require('zlib');
 const Limiter = require('async-limiter');
 
-const message = {some: "data"};
+const message = { some: 'data' };
 const payload = new Buffer(JSON.stringify(message));
 
 // Try with different concurrency values to see how this actually
@@ -79,7 +79,7 @@ const payload = new Buffer(JSON.stringify(message));
 // 10:       1375.668ms
 // Infinity: 4423.300ms
 //
-const t = new Limiter({concurrency: 5});
+const t = new Limiter({ concurrency: 5 });
 function deflate(payload, cb) {
   t.push(function(done) {
     zlib.deflate(payload, function(err, buffer) {
@@ -90,8 +90,8 @@ function deflate(payload, cb) {
 }
 
 console.time('deflate');
-for(let i = 0; i < 30000; ++i) {
-  deflate(payload, function (err, buffer) {});
+for (let i = 0; i < 30000; ++i) {
+  deflate(payload, function(err, buffer) {});
 }
 t.onDone(function() {
   console.timeEnd('deflate');
@@ -116,12 +116,15 @@ Constructor. `opts` may contain inital values for:
 
 ### `t.onDone(fn)`
 `fn` will be called once and only once, when the queue is empty.
+If the queue is empty on the next tick, `onDone()` will be called.
 
 ## Instance methods mixed in from `Array`
 Mozilla has docs on how these methods work [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 ### `t.push(element1, ..., elementN)`
 ### `t.unshift(element1, ..., elementN)`
 ### `t.splice(index , howMany[, element1[, ...[, elementN]]])`
+
+On the next tick, job processing will start.
 
 ## Properties
 ### `t.concurrency`

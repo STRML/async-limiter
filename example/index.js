@@ -1,38 +1,58 @@
 'use strict';
-var Limiter = require('../');
+const Limiter = require('../');
 
-var t = new Limiter({ concurrency: 1 });
-var results = [];
+const concurrency = 1;
+console.log(`Running async-limiter demo with concurrency '${concurrency}'. ` + 
+  'Edit example/index.js to try other configurations.');
+
+// When concurrency != 1, async-limiter makes no ordering guarantees.
+// Try playing with concurrency to see how it behaves.
+const t = new Limiter({ concurrency });
+const results = [];
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function random(upperBound, lowerBound = 0) {
+  return Math.floor(Math.random() * 200) + lowerBound;
+}
+
+function done(result) {
+  results.push(result);
+  console.log(new Date().toISOString() + ' ' + result);
+}
 
 // add jobs using the familiar Array API
-t.push(function(cb) {
-  results.push('one');
-  process.nextTick(cb);
+t.push(async function(cb) {
+  await delay(random(200));
+  done('two');
+  cb();
 });
 
 t.push(
-  function(cb) {
-    results.push('four');
-    process.nextTick(cb);
+  async function(cb) {
+    await delay(random(200));
+    done('four');
+    cb();
   },
-  function(cb) {
-    results.push('five');
-    process.nextTick(cb);
+  async function(cb) {
+    await delay(random(200));
+    done('five');
+    cb();
   }
 );
 
-// While this would normally push to the beginning of the array,
-// processing has already started so 'one' is in flight.
-// The async function is initiated synchronously (but resolves asynchronously)
-// unless we've hit our parallelism limit.
-t.unshift(function(cb) {
-  results.push('two');
-  process.nextTick(cb);
+t.unshift(async function(cb) {
+  await delay(random(200));
+  done('one');
+  cb();
 });
 
-t.splice(1, 0, function(cb) {
-  results.push('three');
-  process.nextTick(cb);
+t.splice(2, 0, async function(cb) {
+  await delay(random(200));
+  done('three');
+  cb();
 });
 
 t.onDone(function() {
