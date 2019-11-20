@@ -2,7 +2,7 @@
 const Limiter = require('../');
 
 const concurrency = 1;
-console.log(`Running async-limiter demo with concurrency '${concurrency}'. ` + 
+console.log(`Running async-limiter demo with concurrency '${concurrency}'. ` +
   'Edit example/index.js to try other configurations.');
 
 // When concurrency != 1, async-limiter makes no ordering guarantees.
