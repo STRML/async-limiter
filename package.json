@@ -29,6 +29,8 @@
     "example": "node example",
     "lint": "eslint ."
   },
+  "main": "index.js",
+  "types": "index.d.ts",
   "repository": "https://github.com/strml/async-limiter.git",
   "author": "Samuel Reed <samuel.trace.reed@gmail.com",
   "license": "MIT"
