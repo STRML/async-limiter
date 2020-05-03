@@ -153,7 +153,7 @@ describe('Async-Limiter', function(endTest) {
   });
 
   it('has a length property that follows concurrency', function(endTest) {
-    var t = Limiter({ concurrency: 1 });
+    var t = new Limiter({ concurrency: 1 });
 
     t.push(function(cb) {
       setTimeout(function() {
