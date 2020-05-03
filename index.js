@@ -84,9 +84,10 @@ class Queue {
    */
   onDone(cb) {
     if (typeof cb === 'function') this.onDoneCbs.push(cb);
-    // If there are no jobs in the queue, this will call `cb()` in the next tick.
-    // This is intended for that there is predictable behavior even when running a
-    // job list of length 0.
+    // If there are no jobs in the queue,
+    // this will call `cb()` in the next tick.
+    // This is intended for that there is predictable
+    // behavior even when running a job list of length 0.
     // @ts-ignore
     process.nextTick(this._run);
   }
