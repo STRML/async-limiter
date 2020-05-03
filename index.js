@@ -1,11 +1,27 @@
 'use strict';
 
+/**
+ * @typedef {() => void} LimiterCallback
+ * @typedef {(cb: LimiterCallback) => void | any} AsyncJobCallback
+ * @typedef {(...args: any) => any} OnDoneCallback
+ *
+ * @extends Array<AsyncJobCallback>
+ */
 class Queue {
+  /**
+   * @param {{ concurrency: number; }} [options={ concurrency: Infinity }]
+   */
   constructor(options) {
+    /** @readonly @type {number} */
     this.concurrency = (options || {}).concurrency || Infinity;
+
+    /** @private @type {number} */
     this.pending = 0;
 
+    /** @private @type {AsyncJobCallback[]} */
     this.jobs = [];
+
+    /** @private @type {OnDoneCallback[]} */
     this.onDoneCbs = [];
 
     this.push = this._extendFromArray('push');
@@ -23,6 +39,7 @@ class Queue {
   /**
    * Called upon completion of a job. Calls _run() again
    * to pluck the next job off the queue, if it exists.
+   * @private
    */
   _done() {
     this.pending--;
@@ -48,6 +65,8 @@ class Queue {
 
   /**
    * Replicate popular array methods to queue up jobs.
+   * @private
+   * @param {string} method
    */
   _extendFromArray(method) {
     return function() {
@@ -61,6 +80,7 @@ class Queue {
 
   /**
    * Simply adds a callback to the end of the job list
+   * @param {any} cb
    */
   onDone(cb) {
     if (typeof cb === 'function') this.onDoneCbs.push(cb);
