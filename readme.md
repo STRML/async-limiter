@@ -19,7 +19,7 @@ In this case, it is actually faster, and takes far less memory, to limit concurr
 This module should do the absolute minimum work necessary to queue up functions. PRs are welcome that would
 make this module faster or lighter, but new functionality is not desired.
 
-Style should confirm to nodejs/node style.
+Style should conform to nodejs/node style.
 
 ## Example
 
